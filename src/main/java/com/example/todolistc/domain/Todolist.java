@@ -17,7 +17,5 @@ public class Todolist {
     private Long id;
     private String content;
     private String date;
-
-    // getters and setters
 }
 

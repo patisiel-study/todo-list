@@ -10,6 +10,6 @@ public class TodolistDto {
     private Long id;
     private String content;
     private String date;
-
+//dto
 }
 

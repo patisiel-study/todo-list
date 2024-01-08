@@ -32,7 +32,7 @@ public class TodolistService {
     }
 
     public TodolistDto createTodolist(TodolistDto todolistDto) {
-        Todolist todolist = convertToEntity(todolistDto);
+        Todolist todolist = convertToEntity(todolistDto); //create
         return convertToDto(todolistRepository.save(todolist));
     }
 
