@@ -10,7 +10,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/todolist")
 public class TodolistControllor {
-
     private final TodolistService todolistService;
 
     @Autowired
