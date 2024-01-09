@@ -46,7 +46,7 @@ public class TodolistController {
         }
     }
 
-    @PutMapping("/{id}") //예외처리
+    @PutMapping("/{id}") //예외 처리
     public ResponseEntity<String> updateTodolist(@PathVariable Long id, @RequestBody TodolistDto todolistDto) {
         try {
             todolistService.updateTodolist(id, todolistDto);
