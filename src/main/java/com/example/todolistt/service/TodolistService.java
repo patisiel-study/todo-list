@@ -41,7 +41,7 @@ public class TodolistService {
         todolist.setContent(todolistDto.getContent());
         todolist.setDate(todolistDto.getDate());
         return todolistRepository.save(todolist);
-    }
+    }//update
 
     public void deleteTodolist(Long id) {
         if (!todolistRepository.existsById(id)) {
