@@ -26,7 +26,7 @@ public class TodolistController {
         this.todolistService = todolistService;
     }
 
-    @GetMapping("/list") //예외 처리
+    @GetMapping("/list")
     public ResponseEntity<List<TodolistDto>> getAllTodolists() {
         List<TodolistDto> todolistDtoList = todolistService.getAllTodolists();
         if (todolistDtoList.isEmpty()) {
@@ -36,7 +36,7 @@ public class TodolistController {
         }
     }
 
-    @PostMapping("/create") //예외처리
+    @PostMapping("/create")
     public ResponseEntity<Todolist> createTodolist(@RequestBody TodolistDto todolistDto) {
         try {
             Todolist createdTodolist = todolistService.createTodolist(todolistDto);
@@ -46,7 +46,7 @@ public class TodolistController {
         }
     }
 
-    @PutMapping("/{id}") //예외처리
+    @PutMapping("/{id}") //예외 처리 완료
     public ResponseEntity<String> updateTodolist(@PathVariable Long id, @RequestBody TodolistDto todolistDto) {
         try {
             todolistService.updateTodolist(id, todolistDto);
