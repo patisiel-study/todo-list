@@ -21,7 +21,7 @@ public class TodolistService {
         this.todolistRepository = todolistRepository;
     }
 
-    public List<TodolistDto> getAllTodolists() {
+    public List<TodolistDto> getAllTodolists() { //수정
         List<Todolist> todolists = todolistRepository.findAll();
         return todolists.stream()
                 .map(todolist -> new TodolistDto(todolist.getId(), todolist.getContent(), todolist.getDate()))
