@@ -1,11 +1,13 @@
-package com.example.todolistt.controllor;
+package com.example.todolistt.controller;
 
 
 //import org.springframework.web.bind.annotation.RequestBody;
 import com.example.todolistt.domain.Todolist;
 import com.example.todolistt.dto.TodolistDto;
+import com.example.todolistt.repository.TodolistRepository;
 import com.example.todolistt.service.TodolistService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ public class TodolistController {
 
     private final TodolistService todolistService;
 
+    @Autowired
     public TodolistController(TodolistService todolistService) {
         this.todolistService = todolistService;
     }
@@ -33,31 +36,37 @@ public class TodolistController {
         }
     }
 
-
-
     @PostMapping("/create")
     public ResponseEntity<Todolist> createTodolist(@RequestBody TodolistDto todolistDto) {
-        Todolist createdTodolist = todolistService.createTodolist(todolistDto);
-        return new ResponseEntity<>(createdTodolist, HttpStatus.CREATED);
+        try {
+            Todolist createdTodolist = todolistService.createTodolist(todolistDto);
+            return new ResponseEntity<>(createdTodolist, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTodolist(@PathVariable Long id, @RequestBody TodolistDto todolistDto) {
+    public ResponseEntity<String> updateTodolist(@PathVariable Long id, @RequestBody TodolistDto todolistDto) {
         try {
-            Todolist updatedTodolist = todolistService.updateTodolist(id, todolistDto);
-            return ResponseEntity.ok(updatedTodolist);
+            todolistService.updateTodolist(id, todolistDto);
+            return ResponseEntity.ok("일정 업데이트 성공");
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류 발생");
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTodolist(@PathVariable Long id) {
+    public ResponseEntity<String> deleteTodolistById(@PathVariable Long id) {
         try {
             todolistService.deleteTodolist(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (EmptyResultDataAccessException e) {
+            return new ResponseEntity<>("일정 삭제 성공", HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("오류 발생", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
