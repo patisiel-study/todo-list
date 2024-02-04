@@ -24,7 +24,7 @@ public class TodolistService {
     public List<TodolistDto> getAllTodolists() {
         List<Todolist> todolists = todolistRepository.findAll();
         return todolists.stream()
-                .map(todolist -> new TodolistDto(todolist.getId(), todolist.getContent(), todolist.getDate()))
+                .map(todolist -> new TodolistDto(todolist.getId(), todolist.getContent(), todolist.getDate(), todolist.isChecked()))
                 .collect(Collectors.toList());
     }
 
@@ -32,6 +32,7 @@ public class TodolistService {
         Todolist todolist = new Todolist();
         todolist.setContent(todolistDto.getContent());
         todolist.setDate(todolistDto.getDate());
+        todolist.setChecked(todolistDto.isChecked());
         return todolistRepository.save(todolist);
     }
 
@@ -40,6 +41,7 @@ public class TodolistService {
                 .orElseThrow(() -> new EntityNotFoundException("해당 데이터 없음"));
         todolist.setContent(todolistDto.getContent());
         todolist.setDate(todolistDto.getDate());
+        todolist.setChecked(todolistDto.isChecked());
         return todolistRepository.save(todolist);
     }
 
