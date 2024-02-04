@@ -17,6 +17,7 @@ public class Todolist {
     private Long id;
     private String content;
     private String date;
+    private boolean checked = false;
 
     // getters and setters
 }
